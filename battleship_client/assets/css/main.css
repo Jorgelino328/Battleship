@@ -2,6 +2,7 @@
 @import 'drag.css';
 @import 'menu.css';
 @import 'placement.css';
+@import 'game.css';
 
 .loader-container {
     position: absolute;

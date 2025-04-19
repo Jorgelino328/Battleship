@@ -1,0 +1,33 @@
+/* Game-specific styles */
+#opponent-grid .cell.active-turn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: crosshair;
+}
+
+.cell.hit {
+    background-color: #dc3545 !important;
+}
+
+.cell.miss {
+    background-color: #0d6efd !important;
+}
+
+.cell.firing {
+    animation: pulse 1s infinite;
+}
+
+.cell.sunk-ship {
+    animation: fadeInOut 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+@keyframes fadeInOut {
+    0% { background-color: #dc3545; }
+    50% { background-color: #fd7e14; }
+    100% { background-color: #dc3545; }
+}
