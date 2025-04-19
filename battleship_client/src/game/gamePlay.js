@@ -11,8 +11,13 @@ let isMyTurn = false;
 let gameActive = false;
 
 export function initializeGameBoards() {
-    if (opponentGridDiv && opponentGridDiv.children.length === 0) {
+    console.log('Initializing game boards...');
+    
+    if (opponentGridDiv) {
+        console.log('Creating opponent grid...');
         createOpponentGrid();
+    } else {
+        console.error('opponentGridDiv not found!');
     }
 }
 
@@ -35,11 +40,14 @@ function createOpponentGrid() {
             opponentGridDiv.appendChild(cell);
         }
     }
+    console.log('Opponent grid created with', opponentGridDiv.children.length, 'cells');
 }
 
 function handleShot(x, y, cell) {
     isMyTurn = false;
     cell.classList.add('firing');
+    
+    console.log(`Firing at: ${x}, ${y}`);
     
     socket.emit('fire', { x: parseInt(x), y: parseInt(y) });
     
