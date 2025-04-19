@@ -7,10 +7,19 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-app.get('/', (req, res) => {
-  res.sendFile(join(__dirname, '../battleship_client/index.html'));
+const clientPath = join(__dirname, '../battleship_client');
+app.use(express.static(clientPath));
+
+io.on('connection', (socket) => {
+  console.log(`Usuario com o ID: ${socket.id} conectado!`);
+
+  socket.on('disconnect', () => {
+    console.log(`Usuario com o ID: ${socket.id} desconectado!`);
+  });
+
 });
 
-server.listen(8080, () => {
-  console.log('server running at http://localhost:8080');
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
