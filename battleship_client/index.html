@@ -3,17 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/battleship_icon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="style.css">
-    <title>Battleship - Main Menu</title>
+    <title>Battleship</title>
 </head>
 <body>
-    <div class="main-menu-container">
+    <div id="main-menu" class="main-menu-container">
         <h1>B A T T L E S H I P</h1>
-        <button id="play-button">PLAY</button>
+        <button id="play-button">Play</button>
+    </div>
+
+    <div id="game-boards-area" class="hidden">
+        <div class="boards-wrapper">
+            <div class="board-section">
+                <h2>Seu tabuleiro</h2>
+                <div id="player-grid" class="grid">
+                </div>
+            </div>
+            <div class="board-section">
+                <h2>Tabuleiro do Oponente</h2>
+                <div id="opponent-grid" class="grid">
+                    <div id="opponent-loader" class="loader-container active">
+                        <div class="spinner"></div>
+                        <p>Procurando Oponente...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="game-status"></div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
-    
     <script src="script.js"></script>
 </body>
 </html>

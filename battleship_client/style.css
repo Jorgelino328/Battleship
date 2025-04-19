@@ -1,12 +1,15 @@
+/* --- Estilos do Menu --- */
+
 body {
     margin: 0;
-    font-family: sans-serif;
+    font-family: Verdana, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     background-color: #045c8f;
     color: #333;
+    flex-direction: column;
 }
 
 .main-menu-container {
@@ -20,14 +23,14 @@ body {
 h1 {
     margin-top: 0;
     margin-bottom: 100px;
-    font-size: 10rem;
+    font-size: 5rem;
     font-family: Verdana, sans-serif;
     color: #1a237e;
 }
 
 #play-button {
     padding: 12px 25px;
-    font-size: 5rem;
+    font-size: 2rem;
     font-weight: bold;
     font-family: Verdana, sans-serif;
     color: #ffffff;
@@ -41,4 +44,129 @@ h1 {
 #play-button:hover {
     background-color: #218838;
     color: #a7da93;
+}
+
+/* --- Estilos do Tabuleiro (Área e Layout) --- */
+
+#game-boards-area {
+    width: 90%;
+    max-width: 800px;
+    margin-top: 20px;
+}
+
+.boards-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 20px;
+}
+
+.board-section {
+    text-align: center;
+}
+
+.board-section h2 {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #ffffff;
+    font-weight: normal;
+}
+
+/* --- Estilos da Grade e Células --- */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, 32px);
+    grid-template-rows: repeat(10, 32px);
+    border: 2px solid #666;
+    width: 320px;
+    height: 320px;
+    margin: 0 auto;
+    background-color: #a8dadc;
+    position: relative;
+}
+
+.cell {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #457b9d;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 9px;
+    cursor: pointer;
+    background-color: #a8dadc;
+    transition: background-color 0.15s ease;
+    color: #1d3557;
+}
+
+.cell:hover {
+    background-color: #f1faee;
+}
+
+/* --- Estilos do Carregador (Loader) --- */
+
+.loader-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(69, 123, 157, 0.8);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    border-radius: inherit;
+    text-align: center;
+}
+
+.loader-container.active {
+    display: flex;
+}
+
+.spinner {
+    border: 5px solid #a8dadc;
+    border-top: 5px solid #f1faee;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1.2s linear infinite;
+    margin-bottom: 15px;
+}
+
+.loader-container p {
+    font-weight: bold;
+    color: #f1faee;
+    font-size: 0.9em;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* --- Área de Status do Jogo --- */
+
+#game-status {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 1.1em;
+    font-weight: bold;
+    min-height: 25px;
+    color: #ffffff;
+}
+
+/* --- Utilitário --- */
+
+.hidden {
+    display: none !important;
+}
+
+/* --- Classe Temporária de Posicionamento --- */
+
+.placing-ship {
+    background-color: #e63946 !important;
 }
