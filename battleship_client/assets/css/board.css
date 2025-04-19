@@ -1,0 +1,39 @@
+
+#game-boards-area {
+    width: 100%; 
+    max-width: 1100px; 
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, 32px);
+    grid-template-rows: repeat(10, 32px);
+    border: 2px solid #666;
+    width: 320px; 
+    height: 320px; 
+    background-color: #a8dadc;
+}
+
+.cell {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #457b9d;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 9px;
+    cursor: default;
+    background-color: #a8dadc;
+    transition: background-color 0.15s ease, opacity 0.2s ease;
+    color: #1d3557;
+}
+
+#placement-grid .cell {
+    cursor: default;
+}
+
+#placement-grid .cell:not(.placed-ship):hover {
+    background-color: #f1faee;
+    cursor: pointer;
+}

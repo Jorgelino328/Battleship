@@ -1,0 +1,25 @@
+export const mainMenu = document.getElementById('main-menu');
+export const placementArea = document.getElementById('placement-area');
+export const gameBoardsArea = document.getElementById('game-boards-area');
+export const placementGridDiv = document.getElementById('placement-grid');
+export const playerGridDiv = document.getElementById('player-grid');
+export const opponentGridDiv = document.getElementById('opponent-grid'); 
+export const opponentLoader = document.getElementById('opponent-loader'); 
+export const shipDock = document.getElementById('ship-dock');
+export const shipContainer = shipDock ? shipDock.querySelector('.ship-container') : null; 
+export const rotateButton = document.getElementById('rotate-button');
+export const findOpponentButton = document.getElementById('find-opponent-button');
+export const resetButton = document.getElementById('reset-placement-button');
+export const playButton = document.getElementById('play-button');
+export const gameStatusDiv = document.getElementById('game-status'); 
+export const placementStatusDiv = document.getElementById('placement-status');
+
+if (!mainMenu) console.error('Elemento DOM #main-menu não encontrado!');
+if (!placementArea) console.error('Elemento DOM #placement-area não encontrado!');
+if (!gameBoardsArea) console.error('Elemento DOM #game-boards-area não encontrado!');
+if (!placementGridDiv) console.error('Elemento DOM #placement-grid não encontrado!');
+if (!playerGridDiv) console.error('Elemento DOM #player-grid não encontrado!');
+if (!opponentGridDiv) console.error('Elemento DOM #opponent-grid não encontrado!');
+if (!opponentLoader) console.error('Elemento DOM #opponent-loader não encontrado!');
+if (!shipDock) console.error('Elemento DOM #ship-dock não encontrado!');
+if (!shipContainer) console.error('Elemento DOM .ship-container não encontrado em #ship-dock!');

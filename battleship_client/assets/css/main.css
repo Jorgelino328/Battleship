@@ -1,0 +1,28 @@
+@import 'board.css';
+@import 'drag.css';
+@import 'menu.css';
+@import 'placement.css';
+
+.loader-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(69, 123, 157, 0.8);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    border-radius: inherit;
+    text-align: center;
+}
+
+.loader-container.active {
+    display: flex !important;
+}
+
+#game-status {
+     min-height: 2rem;
+}

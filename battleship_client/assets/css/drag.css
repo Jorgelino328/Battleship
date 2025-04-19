@@ -1,0 +1,25 @@
+.cell.drag-over {
+    background-color: #90ee90 !important;
+    border-color: darkgreen;
+    border-style: dashed;
+}
+
+.cell.invalid-placement {
+    background-color: #ff7f7f !important;
+    border-color: darkred;
+    border-style: dashed;
+}
+
+.cell.placed-ship {
+    background-color: var(--bs-secondary) !important;
+    border-color: var(--bs-dark);
+    cursor: grab;
+}
+
+.cell.placed-ship:active {
+    cursor: grabbing;
+}
+
+.cell.dragging-from-board {
+    opacity: 0.4;
+}
