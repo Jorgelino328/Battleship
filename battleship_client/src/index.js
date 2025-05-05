@@ -12,6 +12,31 @@ import { addPlacementListeners } from './placement/placementListeners.js';
 
 console.log('Script principal index.js carregado.');
 
+const menuMusic = new Audio('../../assets/sound/Alexander Ehlers - Warped.mp3');
+menuMusic.loop = true;
+menuMusic.volume = 0.5;
+
+export function stopMenuMusic() {
+    console.log('Stopping menu music');
+    menuMusic.pause();
+    menuMusic.currentTime = 0;
+}
+
+function tryPlayMenuMusic() {
+    console.log('Attempting to play menu music automatically...');
+    menuMusic.play()
+        .then(() => console.log('Menu music started automatically'))
+        .catch(error => {
+            console.log('Autoplay prevented by browser. Will play on first interaction instead:', error);
+            document.addEventListener('click', function startMenuMusicOnFirstInteraction() {
+                menuMusic.play().catch(e => console.error('Error playing menu music on click:', e));
+                document.removeEventListener('click', startMenuMusicOnFirstInteraction);
+            }, { once: true });
+        });
+}
+
+window.addEventListener('DOMContentLoaded', tryPlayMenuMusic);
+
 document.addEventListener('placementReady', function() {
     addPlacementListeners();
 });
@@ -25,14 +50,12 @@ function handlePlayButtonClick() {
     initializePlacementPhase();
 }
 
-// Add function to handle credits button click
 function handleCreditsButtonClick() {
     console.log('Credits button clicked. Showing credits...');
     if (mainMenu) mainMenu.classList.add('d-none');
     if (creditsArea) creditsArea.classList.remove('d-none');
 }
 
-// Add function to handle back button click
 function handleBackFromCreditsClick() {
     console.log('Back from credits clicked. Showing main menu...');
     if (creditsArea) creditsArea.classList.add('d-none');
@@ -46,7 +69,6 @@ if (playButton) {
     console.error('Botão Play inicial não encontrado.');
 }
 
-// Add event listeners for the credits buttons
 if (creditsButton) {
     creditsButton.addEventListener('click', handleCreditsButtonClick);
     console.log('Listener for credits button added.');
@@ -61,7 +83,6 @@ if (backFromCreditsButton) {
     console.error('Back from credits button not found.');
 }
 
-// Socket event listeners for game flow
 socket.on('opponentFound', (data) => {
     console.log('index.js received opponentFound');
     transitionToWaitingForOpponent();

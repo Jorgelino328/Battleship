@@ -6,6 +6,7 @@ import {
 } from '../core/domElements.js';
 import { socket } from '../core/socket.js';
 import { BOARD_SIZE } from '../core/constants.js';
+import { stopMenuMusic } from '../index.js';  
 
 const missSound = new Audio('../../assets/sound/miss.wav');
 const explosionSound = new Audio('../../assets/sound/explosion.wav');
@@ -13,19 +14,19 @@ const backgroundMusic = new Audio('../../assets/sound/Alexander Ehlers - Great m
 const winSound = new Audio('../../assets/sound/win_and_lose_melodies_-_basic_win_1.wav');
 const loseSound = new Audio('../../assets/sound/win_and_lose_melodies_-_basic_lose.wav');
 
-// Configure background music to loop
 backgroundMusic.loop = true;
 let isMyTurn = false;
 let gameActive = false;
 
 function playSound(sound) {
     console.log('Playing sound:', sound.src);
-    sound.currentTime = 0; // Reset to start
+    sound.currentTime = 0;
     sound.play().catch(error => console.error('Error playing sound:', error));
 }
 
 function startBackgroundMusic() {
-    backgroundMusic.volume = 0.5; // Set volume to 50%
+    stopMenuMusic();  
+    backgroundMusic.volume = 0.5; 
     backgroundMusic.play().catch(error => console.error('Error playing background music:', error));
 }
 
