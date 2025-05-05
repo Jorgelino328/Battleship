@@ -10,6 +10,7 @@ export const shipContainer = shipDock ? shipDock.querySelector('.ship-container'
 export const rotateButton = document.getElementById('rotate-button');
 export const findOpponentButton = document.getElementById('find-opponent-button');
 export const resetButton = document.getElementById('reset-placement-button');
+export const backToMenuButton = document.getElementById('back-to-menu-button');
 export const playButton = document.getElementById('play-button');
 export const gameStatusDiv = document.getElementById('game-status'); 
 export const placementStatusDiv = document.getElementById('placement-status');

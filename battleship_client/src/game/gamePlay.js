@@ -77,7 +77,7 @@ function handleShot(x, y, cell) {
     socket.emit('fire', { x: parseInt(x), y: parseInt(y) });
     
     if (gameStatusDiv) {
-        gameStatusDiv.textContent = 'Aguardando resultado...';
+        gameStatusDiv.textContent = 'Waiting Results...';
     }
 }
 
@@ -94,7 +94,7 @@ export function startGame(data) {
     startBackgroundMusic();
     
     if (gameStatusDiv) {
-        gameStatusDiv.textContent = isMyTurn ? 'Sua vez! Atire no tabuleiro do oponente' : 'Vez do oponente';
+        gameStatusDiv.textContent = isMyTurn ? 'Your Turn! Hit the opponent\'s board' : 'Opponent\'s Turn';
     }
     
     updateCellHoverState();
@@ -120,6 +120,8 @@ export function handleShotResult(data) {
     
     const cell = targetGrid.querySelector(`.cell[data-x="${x}"][data-y="${y}"]`);
     
+    playSound(hit ? explosionSound : missSound);
+    
     if (cell) {
         cell.classList.remove('firing');
         cell.classList.add(hit ? 'hit' : 'miss');
@@ -144,12 +146,12 @@ export function handleShotResult(data) {
     
     if (gameStatusDiv) {
         if (isMyTurn) {
-            gameStatusDiv.textContent = 'Sua vez! Atire no tabuleiro do oponente';
-            playSound(hit ? explosionSound : missSound)
+            gameStatusDiv.textContent = 'Your Turn! Hit the opponent\'s board';
+            // Removed sound play from here since we now play it for both players above
         } else {
             gameStatusDiv.textContent = isMyShot ? 
-                (hit ? 'Acertou! Aguardando oponente...' : 'Errou! Aguardando oponente...') :
-                (hit ? 'Seu navio foi atingido!' : 'Oponente errou!');
+                (hit ? 'Hit! Waiting for opponent...' : 'Miss! Waiting for opponent...') :
+                (hit ? 'Your ship was hit!' : 'Opponent missed!');
         }
     }
     
@@ -169,12 +171,12 @@ export function handleGameOver(data) {
     }
     
     if (gameStatusDiv) {
-        gameStatusDiv.textContent = isWinner ? 'Vitória! Você afundou todos os navios inimigos!' : 'Derrota! Todos seus navios foram afundados!';
+        gameStatusDiv.textContent = isWinner ? "Victory! You sunk all of your opponent's ships!" : "Defeat! All your ships were sunk!";
         gameStatusDiv.classList.add(isWinner ? 'text-success' : 'text-danger');
     }
     
     const playAgainBtn = document.createElement('button');
-    playAgainBtn.textContent = 'Jogar Novamente';
+    playAgainBtn.textContent = 'Play Again';
     playAgainBtn.classList.add('btn', 'btn-primary', 'mt-3');
     playAgainBtn.addEventListener('click', () => {
         window.location.reload();
@@ -187,12 +189,12 @@ export function handleOpponentDisconnect() {
     gameActive = false;
     
     if (gameStatusDiv) {
-        gameStatusDiv.textContent = 'Seu oponente desconectou. Você venceu por W.O.!';
+        gameStatusDiv.textContent = 'Your opponent disconnected. You win by W.O.!';
         gameStatusDiv.classList.add('text-warning');
     }
     
     const playAgainBtn = document.createElement('button');
-    playAgainBtn.textContent = 'Jogar Novamente';
+    playAgainBtn.textContent = 'Play Again';
     playAgainBtn.classList.add('btn', 'btn-primary', 'mt-3');
     playAgainBtn.addEventListener('click', () => {
         window.location.reload();

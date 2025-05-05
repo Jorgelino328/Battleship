@@ -1,4 +1,4 @@
-import { playButton, mainMenu, placementArea, gameBoardsArea, creditsButton, creditsArea, backFromCreditsButton } from './core/domElements.js';
+import { playButton, mainMenu, placementArea, gameBoardsArea, creditsButton, creditsArea, backFromCreditsButton, backToMenuButton } from './core/domElements.js';
 import { initializePlacementPhase } from './placement/placementLogic.js';
 import { transitionToWaitingForOpponent } from './game/gameStart.js';
 import { 
@@ -62,6 +62,12 @@ function handleBackFromCreditsClick() {
     if (mainMenu) mainMenu.classList.remove('d-none');
 }
 
+function handleBackToMenuClick() {
+    console.log('Back to menu button clicked. Returning to main menu...');
+    if (placementArea) placementArea.classList.add('d-none');
+    if (mainMenu) mainMenu.classList.remove('d-none');
+}
+
 if (playButton) {
     playButton.addEventListener('click', handlePlayButtonClick);
     console.log('Listener do botão Play adicionado.');
@@ -81,6 +87,13 @@ if (backFromCreditsButton) {
     console.log('Listener for back button added.');
 } else {
     console.error('Back from credits button not found.');
+}
+
+if (backToMenuButton) {
+    backToMenuButton.addEventListener('click', handleBackToMenuClick);
+    console.log('Listener for back to menu button added.');
+} else {
+    console.error('Back to menu button not found.');
 }
 
 socket.on('opponentFound', (data) => {

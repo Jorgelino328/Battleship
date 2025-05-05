@@ -83,7 +83,7 @@ export function applyOrientationToDockShips(orientation) {
         }
     });
     if (rotateButton) {
-        rotateButton.textContent = `Rotacionar (${orientation === 'horizontal' ? 'H' : 'V'})`;
+        rotateButton.textContent = `Rotate Pieces`;
     }
 }
 
@@ -91,7 +91,7 @@ export function updatePlacementStatus() {
     const placedCount = placedShips.size;
     const totalShips = SHIPS_CONFIG.length;
     if (placementStatusDiv) {
-        placementStatusDiv.textContent = `Navios posicionados: ${placedCount} / ${totalShips}`;
+        placementStatusDiv.textContent = `Ships positioned: ${placedCount} / ${totalShips}`;
     }
     if (findOpponentButton) {
         findOpponentButton.disabled = (placedCount !== totalShips);
