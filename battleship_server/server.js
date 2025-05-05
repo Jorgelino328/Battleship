@@ -18,7 +18,7 @@ io.on('connection', (socket) => {
   console.log(`Usuario com o ID: ${socket.id} conectado!`);
 
   socket.on('submitPlacement', (placementData) => {
-    console.log(`Player ${socket.id} submitted placement`);
+    console.log(`Player ${socket.id} submeteu a colocação de navios.`);
     
     socket.playerData = {
       id: socket.id,

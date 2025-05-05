@@ -7,8 +7,32 @@ import {
 import { socket } from '../core/socket.js';
 import { BOARD_SIZE } from '../core/constants.js';
 
+const missSound = new Audio('../../assets/sound/miss.wav');
+const explosionSound = new Audio('../../assets/sound/explosion.wav');
+const backgroundMusic = new Audio('../../assets/sound/Alexander Ehlers - Great mission.mp3');
+const winSound = new Audio('../../assets/sound/win_and_lose_melodies_-_basic_win_1.wav');
+const loseSound = new Audio('../../assets/sound/win_and_lose_melodies_-_basic_lose.wav');
+
+// Configure background music to loop
+backgroundMusic.loop = true;
 let isMyTurn = false;
 let gameActive = false;
+
+function playSound(sound) {
+    console.log('Playing sound:', sound.src);
+    sound.currentTime = 0; // Reset to start
+    sound.play().catch(error => console.error('Error playing sound:', error));
+}
+
+function startBackgroundMusic() {
+    backgroundMusic.volume = 0.5; // Set volume to 50%
+    backgroundMusic.play().catch(error => console.error('Error playing background music:', error));
+}
+
+function stopBackgroundMusic() {
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
+}
 
 export function initializeGameBoards() {
     console.log('Initializing game boards...');
@@ -66,6 +90,7 @@ export function startGame(data) {
     }
     
     initializeGameBoards();
+    startBackgroundMusic();
     
     if (gameStatusDiv) {
         gameStatusDiv.textContent = isMyTurn ? 'Sua vez! Atire no tabuleiro do oponente' : 'Vez do oponente';
@@ -119,6 +144,7 @@ export function handleShotResult(data) {
     if (gameStatusDiv) {
         if (isMyTurn) {
             gameStatusDiv.textContent = 'Sua vez! Atire no tabuleiro do oponente';
+            playSound(hit ? explosionSound : missSound)
         } else {
             gameStatusDiv.textContent = isMyShot ? 
                 (hit ? 'Acertou! Aguardando oponente...' : 'Errou! Aguardando oponente...') :
@@ -132,6 +158,14 @@ export function handleShotResult(data) {
 export function handleGameOver(data) {
     gameActive = false;
     const isWinner = data.winner === socket.id;
+    
+    stopBackgroundMusic();
+    
+    if (isWinner) {
+        playSound(winSound);
+    } else {
+        playSound(loseSound);
+    }
     
     if (gameStatusDiv) {
         gameStatusDiv.textContent = isWinner ? 'Vitória! Você afundou todos os navios inimigos!' : 'Derrota! Todos seus navios foram afundados!';
