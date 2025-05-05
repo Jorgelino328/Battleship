@@ -18,6 +18,12 @@ backgroundMusic.loop = true;
 let isMyTurn = false;
 let gameActive = false;
 
+const TURN_TIME_LIMIT = 30; // 30 seconds time limit
+let timerInterval = null;
+let timeRemaining = TURN_TIME_LIMIT;
+const turnTimerDiv = document.getElementById('turn-timer');
+const timerValueSpan = document.getElementById('timer-value');
+
 function playSound(sound) {
     console.log('Playing sound:', sound.src);
     sound.currentTime = 0;
@@ -68,6 +74,74 @@ function createOpponentGrid() {
     console.log('Opponent grid created with', opponentGridDiv.children.length, 'cells');
 }
 
+function startTimer() {
+    stopTimer(); // Clear any existing timer
+    
+    timeRemaining = TURN_TIME_LIMIT;
+    updateTimerDisplay();
+    
+    if (turnTimerDiv) {
+        turnTimerDiv.classList.remove('d-none');
+    }
+    
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        updateTimerDisplay();
+        
+        if (timeRemaining <= 0) {
+            handleTimerExpired();
+        }
+        
+        // Add warning class when time is running out
+        if (timerValueSpan) {
+            if (timeRemaining <= 10) {
+                timerValueSpan.classList.add('text-danger');
+            } else {
+                timerValueSpan.classList.remove('text-danger');
+            }
+        }
+    }, 1000);
+}
+
+function stopTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    
+    if (turnTimerDiv) {
+        turnTimerDiv.classList.add('d-none');
+    }
+}
+
+function updateTimerDisplay() {
+    if (timerValueSpan) {
+        timerValueSpan.textContent = timeRemaining;
+    }
+}
+
+function handleTimerExpired() {
+    stopTimer();
+    
+    if (isMyTurn && gameActive) {
+        // Time's up - make a random shot
+        const unplayedCells = Array.from(opponentGridDiv.querySelectorAll('.cell:not(.hit):not(.miss)'));
+        
+        if (unplayedCells.length > 0) {
+            // Pick a random cell to fire at
+            const randomCell = unplayedCells[Math.floor(Math.random() * unplayedCells.length)];
+            const x = parseInt(randomCell.dataset.x);
+            const y = parseInt(randomCell.dataset.y);
+            
+            if (gameStatusDiv) {
+                gameStatusDiv.textContent = 'Time\'s up! Firing randomly...';
+            }
+            
+            handleShot(x, y, randomCell);
+        }
+    }
+}
+
 function handleShot(x, y, cell) {
     isMyTurn = false;
     cell.classList.add('firing');
@@ -79,6 +153,9 @@ function handleShot(x, y, cell) {
     if (gameStatusDiv) {
         gameStatusDiv.textContent = 'Waiting Results...';
     }
+    
+    // Stop timer when shot is fired
+    stopTimer();
 }
 
 export function startGame(data) {
@@ -98,6 +175,11 @@ export function startGame(data) {
     }
     
     updateCellHoverState();
+    
+    // Start timer if it's player's turn
+    if (isMyTurn) {
+        startTimer();
+    }
 }
 
 function updateCellHoverState() {
@@ -147,11 +229,14 @@ export function handleShotResult(data) {
     if (gameStatusDiv) {
         if (isMyTurn) {
             gameStatusDiv.textContent = 'Your Turn! Hit the opponent\'s board';
-            // Removed sound play from here since we now play it for both players above
+            // Start timer for player's turn
+            startTimer();
         } else {
             gameStatusDiv.textContent = isMyShot ? 
                 (hit ? 'Hit! Waiting for opponent...' : 'Miss! Waiting for opponent...') :
                 (hit ? 'Your ship was hit!' : 'Opponent missed!');
+            // Stop timer when it's opponent's turn
+            stopTimer();
         }
     }
     
@@ -160,6 +245,8 @@ export function handleShotResult(data) {
 
 export function handleGameOver(data) {
     gameActive = false;
+    stopTimer(); // Stop timer when game ends
+    
     const isWinner = data.winner === socket.id;
     
     stopBackgroundMusic();
@@ -187,6 +274,7 @@ export function handleGameOver(data) {
 
 export function handleOpponentDisconnect() {
     gameActive = false;
+    stopTimer(); // Stop timer when opponent disconnects
     
     if (gameStatusDiv) {
         gameStatusDiv.textContent = 'Your opponent disconnected. You win by W.O.!';

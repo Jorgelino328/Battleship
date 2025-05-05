@@ -44,25 +44,30 @@
             <div class="row justify-content-center g-4">
                 <div class="col-md-auto">
                     <div class="board-section">
-                        <h2 class="fs-5 text-white mb-2 fw-normal">Seu tabuleiro</h2>
+                        <h2 class="fs-5 text-white mb-2 fw-normal">Your Board</h2>
                         <div id="player-grid" class="grid mx-auto"></div>
                     </div>
                 </div>
                 <div class="col-md-auto">
                     <div class="board-section">
-                        <h2 class="fs-5 text-white mb-2 fw-normal">Tabuleiro do Oponente</h2>
+                        <h2 class="fs-5 text-white mb-2 fw-normal">Opponent's Board</h2>
                         <div id="opponent-grid" class="grid mx-auto position-relative">
                             <div id="opponent-loader" class="loader-container active">
                                 <div class="spinner spinner-border text-light" role="status">
                                      <span class="visually-hidden">Loading...</span>
                                 </div>
-                                <p class="text-light fw-bold small mt-2">Aguardando Oponente...</p>
+                                <p class="text-light fw-bold small mt-2">Searching for Opponent...</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div id="game-status" class="text-center mt-3 fs-5 fw-bold text-white"></div>
+            <div id="turn-timer" class="text-center mt-2 fs-6 text-white d-none">
+                <span class="fw-bold">Time Remaining: </span>
+                <span id="timer-value" class="fw-bold">30</span>
+                <span> seconds</span>
+            </div>
         </div>
         <div id="credits-area" class="d-none mt-3">
             <div class="card shadow p-5 mx-auto">
