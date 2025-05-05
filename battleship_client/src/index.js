@@ -1,4 +1,4 @@
-import { playButton, mainMenu, placementArea, gameBoardsArea } from './core/domElements.js';
+import { playButton, mainMenu, placementArea, gameBoardsArea, creditsButton, creditsArea, backFromCreditsButton } from './core/domElements.js';
 import { initializePlacementPhase } from './placement/placementLogic.js';
 import { transitionToWaitingForOpponent } from './game/gameStart.js';
 import { 
@@ -21,7 +21,22 @@ function handlePlayButtonClick() {
     if (mainMenu) mainMenu.classList.add('d-none');
     if (placementArea) placementArea.classList.remove('d-none');
     if (gameBoardsArea) gameBoardsArea.classList.add('d-none');
+    if (creditsArea) creditsArea.classList.add('d-none');
     initializePlacementPhase();
+}
+
+// Add function to handle credits button click
+function handleCreditsButtonClick() {
+    console.log('Credits button clicked. Showing credits...');
+    if (mainMenu) mainMenu.classList.add('d-none');
+    if (creditsArea) creditsArea.classList.remove('d-none');
+}
+
+// Add function to handle back button click
+function handleBackFromCreditsClick() {
+    console.log('Back from credits clicked. Showing main menu...');
+    if (creditsArea) creditsArea.classList.add('d-none');
+    if (mainMenu) mainMenu.classList.remove('d-none');
 }
 
 if (playButton) {
@@ -29,6 +44,21 @@ if (playButton) {
     console.log('Listener do botão Play adicionado.');
 } else {
     console.error('Botão Play inicial não encontrado.');
+}
+
+// Add event listeners for the credits buttons
+if (creditsButton) {
+    creditsButton.addEventListener('click', handleCreditsButtonClick);
+    console.log('Listener for credits button added.');
+} else {
+    console.error('Credits button not found.');
+}
+
+if (backFromCreditsButton) {
+    backFromCreditsButton.addEventListener('click', handleBackFromCreditsClick);
+    console.log('Listener for back button added.');
+} else {
+    console.error('Back from credits button not found.');
 }
 
 // Socket event listeners for game flow

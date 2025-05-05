@@ -13,6 +13,9 @@ export const resetButton = document.getElementById('reset-placement-button');
 export const playButton = document.getElementById('play-button');
 export const gameStatusDiv = document.getElementById('game-status'); 
 export const placementStatusDiv = document.getElementById('placement-status');
+export const creditsButton = document.getElementById('credits-button');
+export const creditsArea = document.getElementById('credits-area');
+export const backFromCreditsButton = document.getElementById('back-from-credits-button');
 
 if (!mainMenu) console.error('Elemento DOM #main-menu não encontrado!');
 if (!placementArea) console.error('Elemento DOM #placement-area não encontrado!');
