@@ -1,7 +1,14 @@
 {
     "name": "battleship",
-    "version": "0.0.1",
-    "description": "battleship.io app",
+    "version": "1.0.0",
+    "description": "Simple Battleship Game with Websockets",
+    "main": "battleship_server/server.js",
+    "scripts": {
+        "start": "node battleship_server/server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Jorge William Câmara Sales",
+    "license": "MIT",
     "type": "commonjs",
     "dependencies": {
         "@socket.io/cluster-adapter": "^0.2.2",
@@ -11,4 +18,3 @@
         "sqlite3": "^5.1.7"
     }
 }
-    
